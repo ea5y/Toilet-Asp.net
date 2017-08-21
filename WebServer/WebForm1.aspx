@@ -8,12 +8,6 @@
     <script runat="server">
         protected void Timer1_Tick(object sender, EventArgs e)
         {
-            /*
-            StockPrice.Text = GetStockPrice();
-            TimeOfPrice.Text = DateTime.Now.ToLongTimeString();
-            */
-            
-
         }
     </script>
     <style>
@@ -21,13 +15,14 @@
             border-collapse: collapse;
             border: none;
             padding: 2px;
+            text-align: center;
         }
         .divcss td{
-            border: solid #d4d4d4 2px;
+            border: solid #aaaaaa 2px;
         }
     </style>
 </head>
-<body>
+<body style="width: 696px">
     <form id="form1" runat="server">
         <asp:ScriptManager ID="ScriptManager1" runat="server" />
         <asp:Timer ID="Timer1" OnTick="Timer1_Tick" runat="server" Interval="1000" />
@@ -37,10 +32,11 @@
 
             </Triggers>
             <ContentTemplate>
-                <div class="divcss" id="TableContainer" runat="server">
+                <div class="divcss" id="TableContainer" runat="server" style="position:absolute; left:10px; top:30px;">
                 </div>
             </ContentTemplate>
         </asp:UpdatePanel>
+        <img src="img.png" width="400px"; height="600px"; style="position:absolute; left:400px; top:0px;" />
     </form>
 </body>
 </html>

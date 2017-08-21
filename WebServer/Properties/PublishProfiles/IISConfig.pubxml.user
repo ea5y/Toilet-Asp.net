@@ -14,7 +14,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/03/2017 14:43:24</publishTime>
     </File>
     <File Include="bin/WebServer.dll">
-      <publishTime>08/10/2017 13:36:59</publishTime>
+      <publishTime>08/21/2017 15:44:22</publishTime>
     </File>
     <File Include="bin/WebServer.pdb">
       <publishTime>08/04/2017 16:46:19</publishTime>
@@ -22,14 +22,17 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Global.asax">
       <publishTime>08/03/2017 17:08:54</publishTime>
     </File>
+    <File Include="img.png">
+      <publishTime>08/21/2017 13:02:11</publishTime>
+    </File>
     <File Include="LitJson.dll">
       <publishTime>08/03/2017 14:43:24</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>08/10/2017 13:47:06</publishTime>
+      <publishTime>08/21/2017 15:43:05</publishTime>
     </File>
     <File Include="WebForm1.aspx">
-      <publishTime>08/09/2017 16:39:35</publishTime>
+      <publishTime>08/21/2017 13:17:20</publishTime>
     </File>
   </ItemGroup>
 </Project>

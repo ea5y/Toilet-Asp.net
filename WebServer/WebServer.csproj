@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="img.png" />
     <Content Include="LitJson.dll" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

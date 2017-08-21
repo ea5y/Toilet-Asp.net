@@ -1,15 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Web;
-using System.Web.Security;
-using System.Web.SessionState;
 using System.Diagnostics;
-using YduCs;
 using System.Threading;
 using WebServer.Src;
-using System.Text;
 using System.Configuration;
 
 namespace WebServer
@@ -31,24 +24,51 @@ namespace WebServer
     public class RoomData
     {
         public string RoomName;
-        public bool IsUsing;
+
+        public bool IsUsing { get; set; }
+
+        public DateTime TimeStart;
+        public DateTime TimeEnd;
+
+        public RoomData()
+        {
+            this.TimeStart = DateTime.Now;
+            this.TimeEnd = DateTime.Now;
+        }
+
+        public void UpdateTimeStart(DateTime timeEnd)
+        {
+            this.TimeStart = timeEnd;
+        }
+
+        public void UpdateTimeEnd(DateTime timeEnd)
+        {
+            this.TimeEnd = timeEnd;
+        }
     }
-    
+
     public class Global : System.Web.HttpApplication
     {
         public static List<FlashAirConfig> FlashAirConfigList = new List<FlashAirConfig>();
         public static List<FlashAirData> FlashAirDataList;
 
         public static List<RoomData> RoomDataList = new List<RoomData>();
-
-        public int IResult;
-        public bool BResult;
+        private Dictionary<int, string> RoomLetterCodeDic = new Dictionary<int, string>()
+        {
+            { 0, "A"},
+            { 1, "B"},
+            { 2, "C"},
+            { 3, "D"},
+            { 4, "E"},
+            { 5, "F"},
+        };
 
         protected void Application_Start(object sender, EventArgs e)
         {
             Debug.Print("Application Start...");
 
             this.ReadConfig();
+            this.InitRoomList();
             this.InitFlashAirDataList();
             this.Run(FlashAirConfigList);
         }
@@ -70,6 +90,25 @@ namespace WebServer
             }
         }
 
+        private void InitRoomList()
+        {
+            for(int i = 0; i < FlashAirConfigList.Count; i++)
+            {
+                for(int j = 0; j < int.Parse(FlashAirConfigList[i].RoomCount); j++)
+                {
+                    RoomData roomData = new RoomData();
+                    roomData.RoomName = string.Format("{0}{1}", i + 1, this.GetRoomLetterCode(j));
+                    roomData.IsUsing = false;
+                    RoomDataList.Add(roomData);
+                }
+            }
+        }
+
+        private string GetRoomLetterCode(int index)
+        {
+            return this.RoomLetterCodeDic[index];
+        }
+
         private void InitFlashAirDataList()
         {
             FlashAirDataList = new List<FlashAirData>();
@@ -78,6 +117,51 @@ namespace WebServer
                 FlashAirData data = new FlashAirData();
                 FlashAirDataList.Add(data);
             }
+        }
+
+        private void UpdateRoomDataList()
+        {
+            int index = 0;
+            for(int i = 0; i < FlashAirDataList.Count; i++)
+            {
+                var roomCount = int.Parse(FlashAirConfigList[i].RoomCount);
+                var binaryData = FlashAirDataList[i].BinaryData;
+                var need = binaryData.Substring(binaryData.Length - roomCount, roomCount);
+                var len = need.Length;
+
+                for(int j = 0; j < roomCount; j++)
+                {
+                    var value = need[--len].ToString();
+                    if(this.DataChangesTakeEffect(index))
+                    {
+                        RoomDataList[index].IsUsing = value == "1";
+                    }
+                    index++;
+                }
+            }
+        }
+
+        private bool DataChangesTakeEffect(int index)
+        {
+            var data = RoomDataList[index];
+            data.TimeEnd = DateTime.Now;
+            Debug.Print("TimeStart:{0}, TimeEnd:{1}", data.TimeStart, data.TimeEnd);
+
+            if(this.DateDiff(data.TimeStart, data.TimeEnd) >= 3000)
+            {
+                data.TimeStart = data.TimeEnd;
+                Debug.Print("===>TakeEffect\n TimeStart:{0}, TimeEnd:{1}", data.TimeStart, data.TimeEnd);
+                return true;
+            }
+            return false;
+        }
+
+        private int DateDiff(DateTime start, DateTime end)
+        {
+            TimeSpan ts1 = new TimeSpan(start.Ticks);
+            TimeSpan ts2 = new TimeSpan(end.Ticks);
+            TimeSpan ts3 = ts1.Subtract(ts2).Duration();
+            return (int)ts3.TotalMilliseconds;
         }
 
         private void Run(List<FlashAirConfig> flashAirConfiglist)
@@ -95,21 +179,6 @@ namespace WebServer
 
             var faData = FlashAirDataList[int.Parse(_flashAir.Index)];
 
-            /*
-            IResult = Ydu.Open(ushort.Parse(_flashAir.UnitId), _flashAir.ModelName, Ydu.YDU_OPEN_NORMAL);
-
-            if (IResult == Ydu.YDU_RESULT_SUCCESS)
-            {
-                var str = "YduOpen success";
-                Debug.Print(str);
-            }
-            else
-            {
-                var str = string.Format("YduOpen error: 0x{0:X}", IResult);
-                Debug.Print(str);
-            }
-            */
-
             string binaryData;
             while(true)
             {
@@ -120,14 +189,19 @@ namespace WebServer
 
                     faData.BinaryData = binaryData;
                     var str = string.Format("Data: {0}", binaryData);
+
+                    this.UpdateRoomDataList();
                     Debug.Print(str);
                 });
+                //===>Test
                 /*
                     binaryData = Convert.ToString(Convert.ToInt32("0x1c", 16), 2).PadLeft(8, '0');
 
                     faData.BinaryData = binaryData;
                     var str = string.Format("Data: {0}", binaryData);
                     Debug.Print(str);
+
+                    this.UpdateRoomDataList();
                     */
 
                 Thread.Sleep(100);
