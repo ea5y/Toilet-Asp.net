@@ -1,0 +1,7 @@
+E:\project\WebServer\WebServer\WebServer\bin\WebServer.dll.config
+E:\project\WebServer\WebServer\WebServer\bin\WebServer.dll
+E:\project\WebServer\WebServer\WebServer\bin\WebServer.pdb
+E:\project\WebServer\WebServer\WebServer\bin\LitJson.dll
+E:\project\WebServer\WebServer\WebServer\obj\Release\WebServer.csprojResolveAssemblyReference.cache
+E:\project\WebServer\WebServer\WebServer\obj\Release\WebServer.dll
+E:\project\WebServer\WebServer\WebServer\obj\Release\WebServer.pdb
