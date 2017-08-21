@@ -134,7 +134,7 @@ namespace WebServer
                     var value = need[--len].ToString();
                     if(this.DataChangesTakeEffect(index))
                     {
-                        RoomDataList[index].IsUsing = value == "1";
+                        RoomDataList[index].IsUsing = value == "0";
                     }
                     index++;
                 }
