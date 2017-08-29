@@ -14,7 +14,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/03/2017 14:43:24</publishTime>
     </File>
     <File Include="bin/WebServer.dll">
-      <publishTime>08/21/2017 16:12:11</publishTime>
+      <publishTime>08/29/2017 15:15:39</publishTime>
     </File>
     <File Include="bin/WebServer.pdb">
       <publishTime>08/04/2017 16:46:19</publishTime>
@@ -29,10 +29,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/03/2017 14:43:24</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>08/21/2017 15:43:05</publishTime>
+      <publishTime>08/29/2017 15:15:40</publishTime>
     </File>
     <File Include="WebForm1.aspx">
-      <publishTime>08/21/2017 13:17:20</publishTime>
+      <publishTime>08/29/2017 15:14:21</publishTime>
     </File>
   </ItemGroup>
 </Project>

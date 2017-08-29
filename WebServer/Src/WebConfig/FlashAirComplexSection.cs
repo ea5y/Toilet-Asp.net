@@ -71,6 +71,13 @@ namespace WebServer
             set { base["modelName"] = value; }
         }
 
+        [ConfigurationProperty("floorName", IsRequired = true, IsKey = true)]
+        public string FloorName
+        {
+            get { return (string)base["floorName"]; }
+            set { base["floorName"] = value; }
+        }
+
         [ConfigurationProperty("roomCount", IsRequired = true, IsKey = true)]
         public string RoomCount
         {

@@ -17,12 +17,15 @@ namespace WebServer
         public string Index;
         public string UnitId;
         public string ModelName;
+        public string FloorName;
         public string RoomCount;
         public string FlashAirUrl;
     }
 
     public class RoomData
     {
+        public string Index;
+        public string FloorName;
         public string RoomName;
 
         public bool IsUsing { get; set; }
@@ -34,16 +37,6 @@ namespace WebServer
         {
             this.TimeStart = DateTime.Now;
             this.TimeEnd = DateTime.Now;
-        }
-
-        public void UpdateTimeStart(DateTime timeEnd)
-        {
-            this.TimeStart = timeEnd;
-        }
-
-        public void UpdateTimeEnd(DateTime timeEnd)
-        {
-            this.TimeEnd = timeEnd;
         }
     }
 
@@ -82,6 +75,7 @@ namespace WebServer
                 config.Index = item.Index;
                 config.UnitId = item.UnitId;
                 config.ModelName = item.ModelName;
+                config.FloorName = item.FloorName;
                 config.RoomCount = item.RoomCount;
                 config.FlashAirUrl = item.FlashAirUrl;
 
@@ -97,7 +91,9 @@ namespace WebServer
                 for(int j = 0; j < int.Parse(FlashAirConfigList[i].RoomCount); j++)
                 {
                     RoomData roomData = new RoomData();
-                    roomData.RoomName = string.Format("{0}{1}", i + 1, this.GetRoomLetterCode(j));
+                    roomData.Index = i.ToString();
+                    roomData.FloorName = FlashAirConfigList[i].FloorName;
+                    roomData.RoomName = this.GetRoomLetterCode(j);
                     roomData.IsUsing = false;
                     RoomDataList.Add(roomData);
                 }

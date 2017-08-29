@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Toilet Test</title>
+    <title>Toilet</title>
     <script runat="server">
         protected void Timer1_Tick(object sender, EventArgs e)
         {
@@ -36,7 +36,8 @@
                 </div>
             </ContentTemplate>
         </asp:UpdatePanel>
-        <img src="img.png" width="400px"; height="600px"; style="position:absolute; left:400px; top:0px;" />
+        <img src="img.png" width="400px"; height="600px"; style="position:absolute; left:500px; top:0px;" />
+
     </form>
 </body>
 </html>
